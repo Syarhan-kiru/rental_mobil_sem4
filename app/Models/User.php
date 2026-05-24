@@ -18,10 +18,17 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+     protected $table = 'users';
+    protected $primaryKey = 'kode_user';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = false;
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'kode_user',
+        'nama_user',
+        'email_user',
+        'pass_user',
+        'level_user'
     ];
 
     /**
@@ -30,8 +37,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'pass_user',
+        
     ];
 
     /**
