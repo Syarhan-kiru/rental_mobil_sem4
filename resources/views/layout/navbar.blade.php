@@ -7,11 +7,9 @@
       <a class="navbar-brand brand-logo" href="{{ route('dashboard') }}"><img src="{{ asset('images/logo.svg') }}" alt="logo" /></a>
       <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('images/logo-mini.svg') }}" alt="logo" /></a>
     </div>
-    <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, Brandon Haynes</h4>
+    <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, {{ session('nama_user') ??'pengguna'}}</h4>
     <ul class="navbar-nav navbar-nav-right">
-      <li class="nav-item">
-        <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
-      </li>
+      
       <li class="nav-item dropdown me-1">
         <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-bs-toggle="dropdown">
           <i class="mdi mdi-calendar mx-0"></i>
@@ -126,7 +124,7 @@
             <i class="mdi mdi-settings text-primary"></i>
             Settings
           </a>
-          <a class="dropdown-item">
+          <a class="dropdown-item" href="{{ url('logout') }}">
             <i class="mdi mdi-logout text-primary"></i>
             Logout
           </a>

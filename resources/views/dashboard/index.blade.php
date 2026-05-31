@@ -1,8 +1,5 @@
 @extends('layout.main')
 @section('content')
-
-   
-   
       <!-- partial -->
           <div class="row">
             <div class="col-12 col-xl-6 grid-margin stretch-card">

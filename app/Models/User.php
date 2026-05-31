@@ -25,7 +25,7 @@ class User extends Authenticatable
     public $timestamps = false;
     protected $fillable = [
         'kode_user',
-        'nama_user',
+       'nama_user',
         'email_user',
         'pass_user',
         'level_user'
@@ -46,11 +46,5 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+   
 }
