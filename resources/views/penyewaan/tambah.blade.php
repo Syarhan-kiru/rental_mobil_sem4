@@ -21,8 +21,8 @@
                     <div class="mb-3">
                         <label>User</label>
                         <select name="kode_user" class="form-control" required>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->kode_user }}">{{ $user->name }}</option>
+                            @foreach ($user as $us)
+                                <option value="{{ $us->kode_user }}">{{ $us->nama_user }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -40,7 +40,7 @@
                         <label>Mobil</label>
                         <select name="id_mobil" class="form-control" required>
                             @foreach ($mobil as $mbl)
-                                <option value="{{ $mbl->id_mobil }}">{{ $mbl->nama_mobil }}</option>
+                                <option value="{{ $mbl->id_mobil }}">{{ $mbl->plat_nomor }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -55,10 +55,7 @@
                         <input type="date" name="tanggal_kembali" class="form-control">
                     </div>
 
-                    <div class="mb-3">
-                        <label>Total Harga</label>
-                        <input type="number" name="total_harga" class="form-control" required>
-                    </div>
+                   
 
                     <div class="mb-3">
                         <label>Status</label>

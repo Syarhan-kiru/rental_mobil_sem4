@@ -15,6 +15,7 @@ class Penyewaan extends Model
     protected $keyType = 'int';
     public $timestamps = false;
     protected $fillable = [
+        'id_penyewaan',
         'kode_user',
         'id_pelanggan',
         'id_mobil',

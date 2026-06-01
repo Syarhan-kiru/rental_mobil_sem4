@@ -26,6 +26,7 @@
                                 <th>Tanggal Kembali</th>
                                 <th>Total Harga</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +36,7 @@
                                 <td>{{ $row->id_penyewaan }}</td>
                                 <td>{{ $row->user->name ?? '-' }}</td>
                                 <td>{{ $row->pelanggan->nama_pelanggan ?? '-' }}</td>
-                                <td>{{ $row->mobil->nama_mobil ?? '-' }}</td>
+                                <td>{{ $row->mobil->merek ?? '-' }}</td>
                                 <td>{{ $row->tanggal_sewa }}</td>
                                 <td>{{ $row->tanggal_kembali ?? '-' }}</td>
                                 <td>{{ number_format($row->total_harga, 0, ',', '.') }}</td>
@@ -44,6 +45,7 @@
                                         {{ ucfirst($row->status) }}
                                     </span>
                                 </td>
+                               
                             </tr>
                             @endforeach
                         </tbody>
