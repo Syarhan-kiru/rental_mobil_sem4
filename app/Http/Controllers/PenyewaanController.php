@@ -11,14 +11,14 @@ use Carbon\Carbon;
 
 class PenyewaanController extends Controller
 {
-    
+
     public function index()
     {
-        
-        $penyewaan = Penyewaan::with(['user','pelanggan','mobil'])->get();
-        return view('penyewaan.index',compact('penyewaan'));
+
+        $penyewaan = Penyewaan::with(['user', 'pelanggan', 'mobil'])->get();
+        return view('penyewaan.index', compact('penyewaan'));
     }
-     public function generateKodePenyewaan()
+    public function generateKodePenyewaan()
     {
         $penyewaanAkhir = Penyewaan::orderBy('id_penyewaan', 'desc')->first();
         if (!$penyewaanAkhir) {
@@ -30,91 +30,95 @@ class PenyewaanController extends Controller
         return 'PNY' . str_pad($number, 3, '0', STR_PAD_LEFT);
     }
     public function tambah()
-{
-    $kodePenyewaan = $this->generateKodePenyewaan();
-    $user = User::all();
-    $pelanggan = Pelanggan::all();
-    $mobil = Mobil::where('status', 'aktif')->get();
+    {
+        $kodePenyewaan = $this->generateKodePenyewaan();
+        $user = User::all();
+        $pelanggan = Pelanggan::all();
+        $mobil = Mobil::where('status', 'aktif')->get();
 
-    $html = view('penyewaan.tambah', compact(
-        'kodePenyewaan',
-        'user',
-        'pelanggan',
-        'mobil'
-    ))->render();
+        $html = view('penyewaan.tambah', compact(
+            'kodePenyewaan',
+            'user',
+            'pelanggan',
+            'mobil'
+        ))->render();
 
-    return response()->json([
-        'data' => $html
-    ]);
-}
-
-   public function simpan(Request $request)
-{
-         $request->validate([
-        'kode_user'       => 'required|exists:users,kode_user',
-        'id_pelanggan'    => 'required|exists:pelanggan,id_pelanggan',
-        'id_mobil'        => 'required|exists:mobil,id_mobil',
-        'tanggal_sewa'    => 'required|date',
-        'tanggal_kembali' => 'nullable|date',
-        'status'          => 'required|in:berjalan,selesai',
-    ]);
-     $mobil = Mobil::findOrFail($request->id_mobil);
-    $kodePenyewaan = $this->generateKodePenyewaan();
-    
-    $tglSewa = Carbon::parse($request->tanggal_sewa);
-    $tglKembali = Carbon::parse($request->tanggal_kembali);
-
-    $jumlahHari = $tglSewa->diffInDays($tglKembali);
-
-    
-    if ($jumlahHari == 0) {
-        $jumlahHari = 1;
+        return response()->json([
+            'data' => $html
+        ]);
     }
 
-    
-    $totalHarga = $mobil->harga_sewa_sehari * $jumlahHari;
+    public function simpan(Request $request)
+    {
+        $request->validate([
+            'kode_user' => 'required|exists:users,kode_user',
+            'id_pelanggan' => 'required|exists:pelanggan,id_pelanggan',
+            'id_mobil' => 'required|exists:mobil,id_mobil',
+            'tanggal_sewa' => 'required|date',
+            'tanggal_kembali' => 'nullable|date',
+            'status' => 'required|in:berjalan,selesai',
+        ]);
+        $mobil = Mobil::findOrFail($request->id_mobil);
+        $kodePenyewaan = $this->generateKodePenyewaan();
 
-     Penyewaan::create([
-        'id_penyewaan'    =>  $kodePenyewaan,
-        'kode_user'       => $request->kode_user,
-        'id_pelanggan'    => $request->id_pelanggan,
-        'id_mobil'        => $request->id_mobil,
-        'tanggal_sewa'    => $request->tanggal_sewa,
-        'tanggal_kembali' => $request->tanggal_kembali,
-        'total_harga'     => $totalHarga,
-        'status'          => $request->status,
-    ]);
+        $tglSewa = Carbon::parse($request->tanggal_sewa);
+        $tglKembali = Carbon::parse($request->tanggal_kembali);
 
-    Mobil::where('id_mobil', $request->id_mobil)->update([
-        'status' => 'disewa'
-    ]);
+        $jumlahHari = $tglSewa->diffInDays($tglKembali);
 
 
-    return response()->json([
-        'status' => true,
-        'message' => 'Penyewaan berhasil ditambahkan'
-    ]);
-}
-   
+        if ($jumlahHari == 0) {
+            $jumlahHari = 1;
+        }
+
+
+        $totalHarga = $mobil->harga_sewa_sehari * $jumlahHari;
+
+        Penyewaan::create([
+            'id_penyewaan' => $kodePenyewaan,
+            'kode_user' => $request->kode_user,
+            'id_pelanggan' => $request->id_pelanggan,
+            'id_mobil' => $request->id_mobil,
+            'tanggal_sewa' => $request->tanggal_sewa,
+            'tanggal_kembali' => $request->tanggal_kembali,
+            'total_harga' => $totalHarga,
+            'status' => $request->status,
+        ]);
+
+        Mobil::where('id_mobil', $request->id_mobil)->update([
+            'status' => 'disewa'
+        ]);
+
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Penyewaan berhasil ditambahkan'
+        ]);
+    }
+
+    public function edit($id){
+        
+    }
+
     public function update(Request $request, $id)
     {
         $penyewaan = Penyewaan::findOrFail($id);
 
         $validated = $request->validate([
-            'kode_user'       => 'required|exists:users,kode_user',
-            'id_pelanggan'    => 'required|exists:pelanggan,id_pelanggan',
-            'id_mobil'        => 'required|exists:mobil,id_mobil',
-            'tanggal_sewa'    => 'required|date',
+            'kode_user' => 'required|exists:users,kode_user',
+            'id_pelanggan' => 'required|exists:pelanggan,id_pelanggan',
+            'id_mobil' => 'required|exists:mobil,id_mobil',
+            'tanggal_sewa' => 'required|date',
             'tanggal_kembali' => 'nullable|date',
-            'total_harga'     => 'required|integer',
-            'status'          => 'required|in:berjalan,selesai',
+            'total_harga' => 'required|integer',
+            'status' => 'required|in:berjalan,selesai',
         ]);
 
         $penyewaan->update($validated);
 
         return response()->json([
             'message' => 'Data penyewaan berhasil diperbarui',
-            'data'    => $penyewaan
+            'data' => $penyewaan
         ]);
     }
 

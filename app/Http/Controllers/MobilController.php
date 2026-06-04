@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mobil;
+use App\Models\Mobil;
 use Illuminate\Http\Request;
 
 class MobilController extends Controller
@@ -76,6 +76,15 @@ class MobilController extends Controller
         'message' => 'Data mobil berhasil disimpan'
     ]);
 }
+public function edit($id)
+{
+    $mobil = Mobil::findOrFail($id);
+    $html = view('mobil.edit', compact('mobil'))->render();
+
+    return response()->json([
+        'data' => $html
+    ]);
+}
 
 
         
@@ -104,10 +113,7 @@ class MobilController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(mobil $mobil)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
