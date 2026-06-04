@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\PenyewaanController;
 
 Route::get('/', function () {
     return view('login.index');
@@ -51,7 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/tambah', [MobilController::class, 'tambah'])->name('tambah');
         Route::post('/simpan', [MobilController::class, 'simpan'])->name('simpan');
         Route::get('/hapus/{id}', [MobilController::class, 'hapus'])->name('hapus');
-        Route::post('/edit/{id}', [MobilController::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [MobilController::class, 'edit'])->name('edit');
         Route::post('/update', [MobilController::class, 'update'])->name('update');
     });
 
@@ -69,5 +70,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/edit/{id}', [PelangganController::class, 'edit'])->name('edit');
         Route::post('/update', [PelangganController::class, 'update'])->name('update');
     });
-
+/*
+    |--------------------------------------------------------------------------
+    | Data penyewaan
+    |--------------------------------------------------------------------------
+    */
+ 
 });
