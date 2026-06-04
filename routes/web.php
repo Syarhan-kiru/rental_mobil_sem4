@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenyewaanController;
-use App\Http\Controllers\PenyewaanController;
+
 
 Route::get('/', function () {
     return view('login.index');
@@ -90,4 +90,3 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
  
-});
