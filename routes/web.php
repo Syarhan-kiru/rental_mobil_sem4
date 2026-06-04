@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenyewaanController;
+use App\Http\Controllers\PenyewaanController;
 
 Route::get('/', function () {
     return view('login.index');
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/simpan', [MobilController::class, 'simpan'])->name('simpan');
         Route::get('/hapus/{id}', [MobilController::class, 'hapus'])->name('hapus');
         Route::get('/edit/{id}', [MobilController::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [MobilController::class, 'edit'])->name('edit');
         Route::post('/update', [MobilController::class, 'update'])->name('update');
     });
 
@@ -69,6 +71,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/hapus/{id}', [PelangganController::class, 'hapus'])->name('hapus');
         Route::post('/edit/{id}', [PelangganController::class, 'edit'])->name('edit');
         Route::post('/update', [PelangganController::class, 'update'])->name('update');
+    });
+
+   Route::prefix('penyewaan')->name('penyewaan.')->group(function () {
+    Route::get('/', [PenyewaanController::class, 'index'])->name('index');
+    Route::get('/tambah', [PenyewaanController::class, 'tambah'])->name('tambah');
+    Route::post('/simpan', [PenyewaanController::class, 'simpan'])->name('simpan');
+    Route::get('/detail/{id}', [PenyewaanController::class, 'show'])->name('detail');
+    Route::get('/hapus/{id}', [PenyewaanController::class, 'destroy'])->name('hapus');
+    Route::get('/edit/{id}', [PenyewaanController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [PenyewaanController::class, 'update'])->name('update');
+});
+
     });
 /*
     |--------------------------------------------------------------------------

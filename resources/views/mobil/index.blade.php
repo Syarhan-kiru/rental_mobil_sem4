@@ -31,6 +31,7 @@
                                 <th>Harga Sewa/Hari</th>
                                 <th>Foto</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
 
@@ -53,6 +54,12 @@
                                 </td>
 
                                 <td>{{ $row->status }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info btn-sm"
+                                    onclick="editmobil('<?= $row->id_mobil ?>')" title="Edit">
+                                    <i class="mdi mdi-book-edit"></i>
+                                </button> 
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -69,11 +76,11 @@
 <div class="viewmodal" style="display: none;"></div>
 
 <script>
-     $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
     function tambahmobil() {
         $.ajax({
@@ -94,4 +101,23 @@
             },
         });
     }
+     function editmobil(kode) {
+    $.ajax({
+        type: "GET",
+        url: "{{ url('mobil/edit') }}/" + kode,
+        dataType: "json",
+        success: function(response) {
+            if (response.data) {
+                $(".viewmodal").html(response.data).show();
+                $("#modalEditMobil").on("shown.bs.modal", function(e) {
+                    $("#nama").focus();
+                });
+                $("#modalEditMobil").modal("show");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        }
+    });
+}
 </script>

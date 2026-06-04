@@ -36,6 +36,7 @@
   <script src="{{ asset('js/template.js') }}"></script>
   <script src="{{ asset('js/jquery.cookie.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/dashboard.js') }}"></script>
+  
 </body>
 
 </html>

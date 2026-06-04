@@ -14,7 +14,18 @@ class PelangganController extends Controller
         return view('pelanggan.index', compact('pelanggan'));
     }
 
-   
+   public function generateKodePelanggan()
+    {
+        $pelangganAkhir = Pelanggan::orderBy('id_pelanggan', 'desc')->first();
+        if (!$pelangganAkhir) {
+            return 'PLG001';
+        }
+
+        $number = (int) substr($pelangganAkhir->id_pelanggan, 3);
+        $number++;
+        return 'PLG' . str_pad($number, 3, '0', STR_PAD_LEFT);
+    }
+    
     public function tambah()
     {
         $kodePelanggan = $this->generateKodePelanggan();
@@ -26,17 +37,7 @@ class PelangganController extends Controller
     }
 
     
-    public function generateKodePelanggan()
-    {
-        $pelangganAkhir = Pelanggan::orderBy('id_pelanggan', 'desc')->first();
-        if (!$pelangganAkhir) {
-            return 'PLG001';
-        }
-
-        $number = (int) substr($pelangganAkhir->id_pelanggan, 3);
-        $number++;
-        return 'PLG' . str_pad($number, 3, '0', STR_PAD_LEFT);
-    }
+    
 
    
     public function simpan(Request $request)
