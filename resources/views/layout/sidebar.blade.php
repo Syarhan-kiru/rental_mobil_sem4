@@ -39,6 +39,18 @@
       </a>
     </li>
 
+    <li class="nav-item sidebar-category">
+  <p>Laporan</p>
+  <span></span>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link" href="{{ route('laporan.mobil') }}">
+    <i class="mdi mdi-file-pdf-box menu-icon"></i>
+    <span class="menu-title">Laporan Mobil</span>
+  </a>
+</li>
+
     @if (session('level_user') == 1)
       <li class="nav-item sidebar-category">
         <p>User</p>

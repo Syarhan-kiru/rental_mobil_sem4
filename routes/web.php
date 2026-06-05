@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenyewaanController;
+use App\Http\Controllers\LaporanController;
 
 
 Route::get('/', function () {
@@ -82,11 +83,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit/{id}', [PenyewaanController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [PenyewaanController::class, 'update'])->name('update');
 });
-
+Route::prefix('laporan')->name('laporan.')->group(function () {
+    Route::get('/mobil', [LaporanController::class, 'lapmobil'])->name('mobil');
+});
     });
 /*
     |--------------------------------------------------------------------------
     | Data penyewaan
     |--------------------------------------------------------------------------
     */
- 
+
