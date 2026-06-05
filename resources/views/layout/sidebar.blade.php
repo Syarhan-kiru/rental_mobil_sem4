@@ -51,6 +51,13 @@
   </a>
 </li>
 
+<li class="nav-item">
+  <a class="nav-link" href="{{ route('laporan.penyewaan') }}">
+    <i class="mdi mdi-file-pdf-box menu-icon"></i>
+    <span class="menu-title">Laporan Penyewaan</span>
+  </a>
+</li>
+
     @if (session('level_user') == 1)
       <li class="nav-item sidebar-category">
         <p>User</p>

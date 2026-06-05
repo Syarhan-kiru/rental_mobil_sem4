@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::prefix('laporan')->name('laporan.')->group(function () {
     Route::get('/mobil', [LaporanController::class, 'lapmobil'])->name('mobil');
+    Route::get('/penyewaan', [LaporanController::class, 'lappenyewaan'])->name('penyewaan');
 });
     });
 /*
