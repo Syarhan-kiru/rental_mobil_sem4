@@ -78,7 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tambah', [PenyewaanController::class, 'tambah'])->name('tambah');
     Route::post('/simpan', [PenyewaanController::class, 'simpan'])->name('simpan');
     Route::get('/detail/{id}', [PenyewaanController::class, 'show'])->name('detail');
-    Route::get('/hapus/{id}', [PenyewaanController::class, 'destroy'])->name('hapus');
+    Route::get('/hapus/{id}', [PenyewaanController::class, 'hapus'])->name('hapus');
     Route::get('/edit/{id}', [PenyewaanController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [PenyewaanController::class, 'update'])->name('update');
 });

@@ -51,7 +51,7 @@
                                         <i class="mdi mdi-pencil"></i>
                                     </button>
                                     <button type="button" class="btn btn-outline-danger btn-sm"
-                                    onclick="hapusPelanggan('<?= $row->id_penyewaan ?>')" title="Hapus">
+                                    onclick="hapusPenyewaan('<?= $row->id_penyewaan ?>')" title="Hapus">
                                     <i class="mdi mdi-delete"></i>
                                 </button>
                                 </td>
@@ -106,6 +106,24 @@
             },
             error: function (xhr) {
                 alert(xhr.responseText);
+            }
+        });
+    }
+     function hapusPenyewaan(kode) {
+        if (!confirm('Yakin ingin menghapus data penyewaan ini?')) {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "{{ url('penyewaan/hapus') }}/" + kode,
+            dataType: "json",
+            success: function(response) {
+                alert(response.message);
+                location.reload();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
             }
         });
     }
