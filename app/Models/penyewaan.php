@@ -11,8 +11,8 @@ class Penyewaan extends Model
 
     protected $table = 'penyewaan';
     protected $primaryKey = 'id_penyewaan';
-    public $incrementing = true;
-    protected $keyType = 'int';
+    public $incrementing = false;
+    protected $keyType = 'string';
     public $timestamps = false;
     protected $fillable = [
         'id_penyewaan',

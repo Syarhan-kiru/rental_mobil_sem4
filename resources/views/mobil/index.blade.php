@@ -57,8 +57,12 @@
                                 <td>
                                     <button type="button" class="btn btn-outline-info btn-sm"
                                     onclick="editmobil('<?= $row->id_mobil ?>')" title="Edit">
-                                    <i class="mdi mdi-book-edit"></i>
-                                </button> 
+                                    <i class="mdi mdi-pencil"></i>
+                                </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="hapusmobil('<?= $row->id_mobil ?>')" title="Hapus">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -120,4 +124,23 @@
         }
     });
 }
+
+    function hapusmobil(kode) {
+        if (!confirm('Yakin ingin menghapus data mobil ini?')) {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "{{ url('mobil/hapus') }}/" + kode,
+            dataType: "json",
+            success: function(response) {
+                alert(response.message);
+                location.reload();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+    }
 </script>

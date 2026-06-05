@@ -45,7 +45,16 @@
                                         {{ ucfirst($row->status) }}
                                     </span>
                                 </td>
-                               
+                                <td>
+                                    <button type="button" class="btn btn-outline-info btn-sm"
+                                        onclick="editPenyewaan('{{ $row->id_penyewaan }}')" title="Edit">
+                                        <i class="mdi mdi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="hapusPelanggan('<?= $row->id_penyewaan ?>')" title="Hapus">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -76,6 +85,23 @@
                 if (response.data) {
                     $(".viewmodal").html(response.data).show();
                     $("#modalTambahPenyewaan").modal("show");
+                }
+            },
+            error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+
+    function editPenyewaan(kode) {
+        $.ajax({
+            url: "{{ url('penyewaan/edit') }}/" + kode,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                if (response.data) {
+                    $(".viewmodal").html(response.data).show();
+                    $("#modalEditPenyewaan").modal("show");
                 }
             },
             error: function (xhr) {

@@ -96,8 +96,25 @@ class PenyewaanController extends Controller
         ]);
     }
 
-    public function edit($id){
-        
+    public function edit($id)
+    {
+        $penyewaan = Penyewaan::findOrFail($id);
+        $user = User::all();
+        $pelanggan = Pelanggan::all();
+        $mobil = Mobil::where('status', 'aktif')
+            ->orWhere('id_mobil', $penyewaan->id_mobil)
+            ->get();
+
+        $html = view('penyewaan.edit', compact(
+            'penyewaan',
+            'user',
+            'pelanggan',
+            'mobil'
+        ))->render();
+
+        return response()->json([
+            'data' => $html
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -122,7 +139,7 @@ class PenyewaanController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function hapus($id)
     {
         $penyewaan = Penyewaan::findOrFail($id);
         $penyewaan->delete();

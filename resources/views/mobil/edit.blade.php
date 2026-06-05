@@ -78,5 +78,34 @@
 </div>
 
 <script>
+    $('#formEditMobil').submit(function(e) {
+    e.preventDefault();
 
+    let formData = new FormData(this);
+
+    $.ajax({
+        url: "{{ url('mobil/update') }}",
+        type: "POST",
+        data: formData,
+
+        processData: false,
+        contentType: false,
+
+        success: function(response) {
+
+            alert(response.message);
+
+            $('#modalTambahMobil').modal('hide');
+
+            location.reload();
+        },
+
+        error: function(xhr) {
+
+            console.log(xhr.responseText);
+
+            alert('Gagal menyimpan data');
+        }
+    });
+});
 </script>

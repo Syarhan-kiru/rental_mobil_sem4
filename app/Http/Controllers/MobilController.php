@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mobil;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MobilController extends Controller
 {
@@ -118,16 +119,61 @@ public function edit($id)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, mobil $mobil)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'id_mobil' => 'required|exists:mobil,id_mobil',
+            'plat_nomor' => 'required|unique:mobil,plat_nomor,' . $request->id_mobil . ',id_mobil',
+            'merek' => 'required',
+            'tipe' => 'required',
+            'tahun' => 'required|integer|min:1900|max:' . date('Y'),
+            'harga_sewa_sehari' => 'required|numeric',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'status' => 'required',
+        ]);
+
+        $mobil = Mobil::findOrFail($request->id_mobil);
+
+        $namaFoto = $mobil->foto;
+
+        if ($request->hasFile('foto')) {
+            if ($mobil->foto && Storage::disk('public')->exists($mobil->foto)) {
+                Storage::disk('public')->delete($mobil->foto);
+            }
+
+            $namaFoto = $request->file('foto')->store('foto_mobil', 'public');
+        }
+
+        $mobil->update([
+            'plat_nomor' => $request->plat_nomor,
+            'merek' => $request->merek,
+            'tipe' => $request->tipe,
+            'tahun' => $request->tahun,
+            'harga_sewa_sehari' => $request->harga_sewa_sehari,
+            'foto' => $namaFoto,
+            'status' => $request->status,
+        ]);
+
+        return response()->json([
+            'message' => 'Data mobil berhasil diperbarui'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(mobil $mobil)
+    public function hapus($id)
     {
-        //
+        $mobil = Mobil::findOrFail($id);
+
+        if ($mobil->foto && Storage::disk('public')->exists($mobil->foto)) {
+            Storage::disk('public')->delete($mobil->foto);
+        }
+
+        $mobil->delete();
+
+        return response()->json([
+            'message' => 'Data mobil berhasil dihapus'
+        ]);
     }
 }

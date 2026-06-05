@@ -23,6 +23,7 @@
                                 <th>NIK</th>
                                 <th>No HP</th>
                                 <th>Alamat</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,16 @@
                                 <td>{{ $row->nik }}</td>
                                 <td>{{ $row->no_hp }}</td>
                                 <td>{{ $row->alamat }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info btn-sm"
+                                    onclick="editPelanggan('<?= $row->id_pelanggan ?>')" title="Edit">
+                                    <i class="mdi mdi-pencil"></i>
+                                </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="hapusPelanggan('<?= $row->id_pelanggan ?>')" title="Hapus">
+                                    <i class="mdi mdi-delete"></i>
+                                </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -68,6 +79,44 @@
             },
             error: function (xhr) {
                 alert(xhr.responseText);
+            }
+        });
+    }
+    function editPelanggan(kode) {
+    $.ajax({
+        type: "GET",
+        url: "{{ url('pelanggan/edit') }}/" + kode,
+        dataType: "json",
+        success: function(response) {
+            if (response.data) {
+                $(".viewmodal").html(response.data).show();
+                $("#modalEditPelanggan").on("shown.bs.modal", function(e) {
+                    $("#nama").focus();
+                });
+                $("#modalEditPelanggan").modal("show");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        }
+    });
+}
+
+    function hapusPelanggan(kode) {
+        if (!confirm('Yakin ingin menghapus data pelanggan ini?')) {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "{{ url('pelanggan/hapus') }}/" + kode,
+            dataType: "json",
+            success: function(response) {
+                alert(response.message);
+                location.reload();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
             }
         });
     }

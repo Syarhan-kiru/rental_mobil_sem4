@@ -14,8 +14,8 @@
 
                     <div class="mb-3">
                         <label>ID Penyewaan</label>
-                        <input type="text" name="id_penyewaan"
-                               class="form-control" value="{{ $kodePenyewaan }}" readonly>
+                        <input type="text" name="id_penyewaan" class="form-control" value="{{ $kodePenyewaan }}"
+                            readonly>
                     </div>
 
                     <div class="mb-3">
@@ -30,6 +30,7 @@
                     <div class="mb-3">
                         <label>Pelanggan</label>
                         <select name="id_pelanggan" class="form-control" required>
+                            <option value="">-- Pilih Pelanggan --</option>
                             @foreach ($pelanggan as $plg)
                                 <option value="{{ $plg->id_pelanggan }}">{{ $plg->nama_pelanggan }}</option>
                             @endforeach
@@ -39,6 +40,7 @@
                     <div class="mb-3">
                         <label>Mobil</label>
                         <select name="id_mobil" class="form-control" required>
+                            <option value="">-- Pilih Mobil --</option>
                             @foreach ($mobil as $mbl)
                                 <option value="{{ $mbl->id_mobil }}">{{ $mbl->plat_nomor }}</option>
                             @endforeach
@@ -55,7 +57,7 @@
                         <input type="date" name="tanggal_kembali" class="form-control">
                     </div>
 
-                   
+
 
                     <div class="mb-3">
                         <label>Status</label>
@@ -68,8 +70,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
 
@@ -80,18 +81,18 @@
 </div>
 
 <script>
-    $('#formTambahPenyewaan').submit(function(e) {
+    $('#formTambahPenyewaan').submit(function (e) {
         e.preventDefault();
         $.ajax({
             url: "{{ url('penyewaan/simpan') }}",
             type: "POST",
             data: $(this).serialize(),
-            success: function() {
+            success: function () {
                 alert('Data penyewaan berhasil disimpan');
                 $('#modalTambahPenyewaan').modal('hide');
                 location.reload();
             },
-            error: function() {
+            error: function () {
                 alert('Gagal menyimpan data');
             }
         });

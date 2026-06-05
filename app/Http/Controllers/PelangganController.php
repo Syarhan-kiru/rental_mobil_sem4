@@ -22,8 +22,8 @@ class PelangganController extends Controller
         }
 
         $number = (int) substr($pelangganAkhir->id_pelanggan, 3);
-        $number++;
-        return 'PLG' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        $newNumber = $number + 1;
+        return 'PLG' . str_pad( $newNumber, 3, '0', STR_PAD_LEFT);
     }
     
     public function tambah()
@@ -62,4 +62,52 @@ class PelangganController extends Controller
         // jika disubmit via halaman biasa, redirect ke index
         return redirect('/pelanggan')->with('success', 'Data pelanggan berhasil ditambahkan');
     }
+    public function edit($id)
+{
+    $pelanggan = Pelanggan::findOrFail($id);
+    $html = view('pelanggan.edit', compact('pelanggan'))->render();
+
+    return response()->json([
+        'data' => $html
+    ]);
+}
+public function update(Request $request)
+    {
+         $request->validate([
+            'id_pelanggan' => 'required|exists:pelanggan,id_pelanggan',
+            'nama_pelanggan' => 'required',
+            'nik' => 'required|unique:pelanggan,nik,' . $request->id_pelanggan . ',id_pelanggan',
+            'no_hp' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $pelanggan = Pelanggan::findOrFail($request->id_pelanggan);
+
+        
+
+       
+
+        $pelanggan->update([
+           'id_pelanggan'   => $request->id_pelanggan,
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'nik'            => $request->nik,
+            'no_hp'          => $request->no_hp,
+            'alamat'         => $request->alamat,
+        ]);
+
+        return response()->json([
+            'message' => 'Data pelanggan berhasil diperbarui'
+        ]);
+    }
+
+    public function hapus($id)
+    {
+        $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan->delete();
+
+        return response()->json([
+            'message' => 'Data pelanggan berhasil dihapus'
+        ]);
+    }
+
 }

@@ -69,7 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/tambah', [PelangganController::class, 'tambah'])->name('tambah');
         Route::post('/simpan', [PelangganController::class, 'simpan'])->name('simpan');
         Route::get('/hapus/{id}', [PelangganController::class, 'hapus'])->name('hapus');
-        Route::post('/edit/{id}', [PelangganController::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [PelangganController::class, 'edit'])->name('edit');
         Route::post('/update', [PelangganController::class, 'update'])->name('update');
     });
 
