@@ -7,53 +7,53 @@
             <div class="card-body">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="card-title mb-0">Data Penyewaan</h4>
-                    <a href="#" class="btn btn-primary" onclick="tambahPenyewaan()">
-                        <i class="mdi mdi-plus"></i> Tambah Penyewaan
-                    </a>
+                    <h4 class="card-title mb-0">Data Pengembalian Mobil</h4>
+                    <button type="button" class="btn btn-primary" onclick="tambahPengembalian()">
+                        <i class="mdi mdi-plus"></i> Tambah Pengembalian
+                    </button>
                 </div>
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead class="table-dark">
                             <tr>
-                                <th width="80">No</th>
-                                <th>ID Penyewaan</th>
-                                <th>User</th>
+                                <th width="60">No</th>
+                                <th>ID Pengembalian</th>
+                                <th>ID Transaksi Sewa</th>
                                 <th>Pelanggan</th>
                                 <th>Mobil</th>
-                                <th>Tanggal Sewa</th>
-                                <th>Tanggal Kembali</th>
-                                <th>Total Harga</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
+                                <th>Tanggal Dikembalikan</th>
+                                <th>Kondisi Mobil</th>
+                                <th>Denda (Rp)</th>
+                                <th>Total Bayar (Rp)</th>
+                                <th width="100">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($penyewaan as $row)
+                            @foreach ($pengembalian as $row)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $row->id_pengembalian }}</td>
                                 <td>{{ $row->id_penyewaan }}</td>
-                                <td>{{ $row->user->name ?? '-' }}</td>
-                                <td>{{ $row->pelanggan->nama_pelanggan ?? '-' }}</td>
-                                <td>{{ $row->mobil->merek ?? '-' }}</td>
-                                <td>{{ $row->tanggal_sewa }}</td>
-                                <td>{{ $row->tanggal_kembali ?? '-' }}</td>
-                                <td>{{ number_format($row->total_harga, 0, ',', '.') }}</td>
+                                <td>{{ $row->penyewaan->pelanggan->nama_pelanggan ?? '-' }}</td>
+                                <td>{{ $row->penyewaan->mobil->merek ?? '-' }} ({{ $row->penyewaan->mobil->plat_nomor ?? '-' }})</td>
+                                <td>{{ \Carbon\Carbon::parse($row->tanggal_dikembalikan)->format('d-m-Y') }}</td>
                                 <td>
-                                    <span class="badge {{ $row->status == 'berjalan' ? 'bg-warning' : 'bg-success' }}">
-                                        {{ ucfirst($row->status) }}
+                                    <span class="badge {{ $row->kondisi_mobil == 'Baik' ? 'bg-success' : 'bg-danger' }}">
+                                        {{ $row->kondisi_mobil }}
                                     </span>
                                 </td>
+                                <td>{{ number_format($row->denda, 0, ',', '.') }}</td>
+                                <td>{{ number_format($row->total_payar, 0, ',', '.') }}</td>
                                 <td>
                                     <button type="button" class="btn btn-outline-info btn-sm"
-                                        onclick="editPenyewaan('{{ $row->id_penyewaan }}')" title="Edit">
+                                        onclick="editPengembalian('{{ $row->id_pengembalian }}')" title="Edit">
                                         <i class="mdi mdi-pencil"></i>
                                     </button>
                                     <button type="button" class="btn btn-outline-danger btn-sm"
-                                    onclick="hapusPenyewaan('<?= $row->id_penyewaan ?>')" title="Hapus">
-                                    <i class="mdi mdi-delete"></i>
-                                </button>
+                                        onclick="hapusPengembalian('{{ $row->id_pengembalian }}')" title="Hapus">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -65,26 +65,27 @@
         </div>
     </div>
 </div>
-@endsection
 
 <div class="viewmodal" style="display: none;"></div>
 
 <script>
+    // Setup CSRF Token Laravel untuk AJAX
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    function tambahPenyewaan() {
+    // Fungsi Panggil Modal Tambah
+    function tambahPengembalian() {
         $.ajax({
-            url: "{{ url('penyewaan/tambah') }}",
+            url: "{{ url('pengembalian/tambah') }}",
             type: "GET",
             dataType: 'json',
             success: function (response) {
                 if (response.data) {
                     $(".viewmodal").html(response.data).show();
-                    $("#modalTambahPenyewaan").modal("show");
+                    $("#modalTambahPengembalian").modal("show"); // Pastikan id modal di tambah.blade.php sesuai
                 }
             },
             error: function (xhr) {
@@ -93,15 +94,16 @@
         });
     }
 
-    function editPenyewaan(kode) {
+    // Fungsi Panggil Modal Edit
+    function editPengembalian(id) {
         $.ajax({
-            url: "{{ url('penyewaan/edit') }}/" + kode,
+            url: "{{ url('pengembalian/edit') }}/" + id,
             type: "GET",
             dataType: "json",
             success: function (response) {
                 if (response.data) {
                     $(".viewmodal").html(response.data).show();
-                    $("#modalEditPenyewaan").modal("show");
+                    $("#modalEditPengembalian").modal("show"); // Pastikan id modal di edit.blade.php sesuai
                 }
             },
             error: function (xhr) {
@@ -109,14 +111,16 @@
             }
         });
     }
-     function hapusPenyewaan(kode) {
-        if (!confirm('Yakin ingin menghapus data penyewaan ini?')) {
+
+    // Fungsi Hapus Data
+    function hapusPengembalian(id) {
+        if (!confirm('Yakin ingin menghapus data pengembalian ini? Status sewa & mobil akan dikembalikan ke semula.')) {
             return;
         }
 
         $.ajax({
             type: "GET",
-            url: "{{ url('penyewaan/hapus') }}/" + kode,
+            url: "{{ url('pengembalian/hapus') }}/" + id,
             dataType: "json",
             success: function(response) {
                 alert(response.message);
@@ -128,3 +132,4 @@
         });
     }
 </script>
+@endsection

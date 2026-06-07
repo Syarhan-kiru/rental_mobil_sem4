@@ -6,9 +6,17 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenyewaanController;
+<<<<<<< HEAD
 use App\Http\Controllers\LaporanController;
+=======
+use App\Http\Controllers\PengembalianController;
+>>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1
 
-
+/*
+|--------------------------------------------------------------------------
+| Autentikasi / Login (Bisa Diakses Tanpa Login)
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
     return view('login.index');
 })->name('login');
@@ -20,20 +28,18 @@ Route::controller(LoginController::class)->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Halaman Admin - Wajib Login
+| Halaman Admin (Wajib Login / Middleware Auth)
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('auth')->group(function () {
 
     Route::view('/dashboard', 'dashboard.index')->name('dashboard');
 
     /*
     |--------------------------------------------------------------------------
-    | Manajemen User
+    | Modul 1: Manajemen User
     |--------------------------------------------------------------------------
     */
-
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/tambah', [UserController::class, 'tambah'])->name('tambah');
@@ -45,35 +51,33 @@ Route::middleware('auth')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Data Mobil
+    | Modul 2: Data Mobil
     |--------------------------------------------------------------------------
     */
-
     Route::prefix('mobil')->name('mobil.')->group(function () {
         Route::get('/', [MobilController::class, 'index'])->name('index');
         Route::get('/tambah', [MobilController::class, 'tambah'])->name('tambah');
         Route::post('/simpan', [MobilController::class, 'simpan'])->name('simpan');
         Route::get('/hapus/{id}', [MobilController::class, 'hapus'])->name('hapus');
         Route::get('/edit/{id}', [MobilController::class, 'edit'])->name('edit');
-        Route::get('/edit/{id}', [MobilController::class, 'edit'])->name('edit');
         Route::post('/update', [MobilController::class, 'update'])->name('update');
     });
 
     /*
     |--------------------------------------------------------------------------
-    | Data Pelanggan
+    | Modul 3: Data Pelanggan
     |--------------------------------------------------------------------------
     */
-
     Route::prefix('pelanggan')->name('pelanggan.')->group(function () {
         Route::get('/', [PelangganController::class, 'index'])->name('index');
         Route::get('/tambah', [PelangganController::class, 'tambah'])->name('tambah');
         Route::post('/simpan', [PelangganController::class, 'simpan'])->name('simpan');
         Route::get('/hapus/{id}', [PelangganController::class, 'hapus'])->name('hapus');
-        Route::post('/edit/{id}', [PelangganController::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [PelangganController::class, 'edit'])->name('edit');
         Route::post('/update', [PelangganController::class, 'update'])->name('update');
     });
 
+<<<<<<< HEAD
    Route::prefix('penyewaan')->name('penyewaan.')->group(function () {
     Route::get('/', [PenyewaanController::class, 'index'])->name('index');
     Route::get('/tambah', [PenyewaanController::class, 'tambah'])->name('tambah');
@@ -89,8 +93,39 @@ Route::prefix('laporan')->name('laporan.')->group(function () {
 });
     });
 /*
+=======
+    /*
+>>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1
     |--------------------------------------------------------------------------
-    | Data penyewaan
+    | Modul 4: Data Penyewaan
     |--------------------------------------------------------------------------
     */
+<<<<<<< HEAD
 
+=======
+    Route::prefix('penyewaan')->name('penyewaan.')->group(function () {
+        Route::get('/', [PenyewaanController::class, 'index'])->name('index');
+        Route::get('/tambah', [PenyewaanController::class, 'tambah'])->name('tambah');
+        Route::post('/simpan', [PenyewaanController::class, 'simpan'])->name('simpan');
+        Route::get('/detail/{id}', [PenyewaanController::class, 'show'])->name('detail');
+        Route::get('/hapus/{id}', [PenyewaanController::class, 'hapus'])->name('hapus');
+        Route::get('/edit/{id}', [PenyewaanController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [PenyewaanController::class, 'update'])->name('update');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Modul 5: Data Pengembalian (Bagian Akin)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('pengembalian')->name('pengembalian.')->group(function () {
+        Route::get('/', [PengembalianController::class, 'index'])->name('index');
+        Route::get('/tambah', [PengembalianController::class, 'tambah'])->name('tambah');
+        Route::post('/simpan', [PengembalianController::class, 'simpan'])->name('simpan');
+        Route::get('/edit/{id}', [PengembalianController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [PengembalianController::class, 'update'])->name('update');
+        Route::get('/hapus/{id}', [PengembalianController::class, 'hapus'])->name('hapus');
+    });
+
+});
+>>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1

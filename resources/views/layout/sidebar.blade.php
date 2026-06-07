@@ -5,7 +5,7 @@
       <span></span>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('dashboard') }}">
         <i class="mdi mdi-view-quilt menu-icon"></i>
         <span class="menu-title">Dashboard</span>
@@ -18,27 +18,28 @@
       <span></span>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('mobil*') ? 'active' : '' }}">
       <a class="nav-link" href="{{ url('mobil') }}">
         <i class="mdi mdi-car menu-icon"></i>
         <span class="menu-title">Data Mobil</span>
       </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('pelanggan*') ? 'active' : '' }}">
       <a class="nav-link" href="{{ url('pelanggan') }}">
         <i class="mdi mdi-account-group menu-icon"></i>
         <span class="menu-title">Data Pelanggan</span>
       </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('penyewaan*') ? 'active' : '' }}">
       <a class="nav-link" href="{{ url('penyewaan') }}">
         <i class="mdi mdi-file-document-box menu-icon"></i>
         <span class="menu-title">Data Penyewaan</span>
       </a>
     </li>
 
+<<<<<<< HEAD
     <li class="nav-item sidebar-category">
   <p>Laporan</p>
   <span></span>
@@ -57,6 +58,14 @@
     <span class="menu-title">Laporan Penyewaan</span>
   </a>
 </li>
+=======
+    <li class="nav-item {{ Request::is('pengembalian*') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ url('pengembalian') }}">
+        <i class="mdi mdi-backup-restore menu-icon"></i>
+        <span class="menu-title">Data Pengembalian</span>
+      </a>
+    </li>
+>>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1
 
     @if (session('level_user') == 1)
       <li class="nav-item sidebar-category">
@@ -64,7 +73,7 @@
         <span></span>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('user') }}">
           <i class="mdi mdi-account menu-icon"></i>
           <span class="menu-title">Manajemen User</span>
