@@ -8,23 +8,32 @@
       body {
          font-family: Arial, sans-serif;
          font-size: 12px;
+         margin: 30px 40px;
       }
 
       .header {
-         position: relative;
-         margin-bottom: 15px;
-         min-height: 50px;
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 12px;
       }
 
-      .logo {
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 50px;
+      .header td {
+         vertical-align: middle;
+         border: none;
+         padding: 0;
       }
 
-      .kop {
+      .header-logo {
+         width: 120px;
+         text-align: left;
+      }
+
+      .header-title {
          text-align: center;
+      }
+
+      .header-space {
+         width: 120px;
       }
 
       .judul {
@@ -49,6 +58,12 @@
          height: 3px;
       }
 
+      .laga {
+         width: 90px;
+         height: auto;
+         display: block;
+      }
+
       table {
          width: 100%;
          border-collapse: collapse;
@@ -69,28 +84,30 @@
       td {
          padding: 6px; vertical-align: middle;
       }
-      .foto-mobil { width: 80px; height: 60px; object-fit: cover; }
+      .foto-mobil { width: 70px; height: 50px; object-fit: cover; }
    </style>
 
 </head>
 
 <body>
 
-   <div class="header">
+   <table class="header" style="border: none;">
+      <tr>
+         <td class="header-logo">
+            <img src="{{ public_path('images/RENTAL-MOBIL.jpeg') }}" alt="logo" class="laga" />
+         </td>
+         <td class="header-title">
+            <div class="judul">
+               SPICA RENTAL MOBIL
+            </div>
 
-      <img src="{{ public_path('images/logo-unri.png') }}" class="logo">
-
-      <div class="kop">
-         <div class="judul">
-            SPICA RENTAL MOBIL
-         </div>
-
-         <div class="alamat">
-            Jl. Contoh No.123 Pekanbaru
-         </div>
-      </div>
-
-   </div>
+            <div class="alamat">
+               Jl. Contoh No.123 Pekanbaru
+            </div>
+         </td>
+         <td class="header-space"></td>
+      </tr>
+   </table>
 
    <div class="garis"></div>
    <div class="subjudul">
@@ -118,8 +135,12 @@
                <td align="center">{{ $item->tahun }}</td>
                <td align="right">Rp {{ number_format($item->harga_sewa_sehari, 0, ',', '.') }}</td>
                <td align="center">
-                  @if($item->foto)
-                     <img src="{{ storage_path('app/public/' . $item->foto) }}" class="foto-mobil">
+                  @php
+                     $fotoPath = $item->foto ? storage_path('app/public/' . $item->foto) : null;
+                  @endphp
+
+                  @if($fotoPath && file_exists($fotoPath))
+                     <img src="{{ $fotoPath }}" class="foto-mobil" alt="Foto Mobil">
                   @else
                      -
                   @endif

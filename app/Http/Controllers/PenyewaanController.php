@@ -142,6 +142,11 @@ class PenyewaanController extends Controller
     public function hapus($id)
     {
         $penyewaan = Penyewaan::findOrFail($id);
+
+        Mobil::where('id_mobil', $penyewaan->id_mobil)->update([
+            'status' => 'aktif'
+        ]);
+
         $penyewaan->delete();
 
         return response()->json([

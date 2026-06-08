@@ -70,11 +70,10 @@
 
   <div class="login-card">
     <div class="login-logo">
-      <i class="mdi mdi-view-dashboard"></i>
+      <img src="{{ asset('images/RENTAL-MOBIL.jpeg') }}" alt="logo" style="width: 120px; height: auto; border-radius: 20px;" />
     </div>
 
     <h3 class="text-center mb-1">Rental Mobil</h3>
-    <p class="text-center text-muted mb-4">Login ke Dashboard Admin</p>
     <div class="card-body">
       @if (session('error'))
         <div class="alert alert-danger">

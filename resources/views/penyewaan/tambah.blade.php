@@ -20,11 +20,8 @@
 
                     <div class="mb-3">
                         <label>User</label>
-                        <select name="kode_user" class="form-control" required>
-                            @foreach ($user as $us)
-                                <option value="{{ $us->kode_user }}">{{ $us->nama_user }}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="form-control" value="{{ auth()->user()->nama_user }}" readonly>
+                        <input type="hidden" name="kode_user" value="{{ auth()->user()->kode_user }}">
                     </div>
 
                     <div class="mb-3">
@@ -83,6 +80,14 @@
 <script>
     $('#formTambahPenyewaan').submit(function (e) {
         e.preventDefault();
+        
+        let tanggalSewa = $('input[name="tanggal_sewa"]').val();
+        let tanggalKembali = $('input[name="tanggal_kembali"]').val();
+
+        if (tanggalSewa && tanggalKembali && tanggalSewa > tanggalKembali) {
+            alert('Tanggal sewa tidak boleh lebih besar dari tanggal kembali!');
+            return;
+        }
         $.ajax({
             url: "{{ url('penyewaan/simpan') }}",
             type: "POST",

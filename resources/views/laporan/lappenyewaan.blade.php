@@ -5,32 +5,111 @@
    <title>Laporan Penyewaan</title>
 
    <style>
-      body { font-family: Arial, sans-serif; font-size: 12px; }
-      .header { position: relative; margin-bottom: 15px; min-height: 50px; }
-      .logo { position: absolute; top: 0; left: 0; width: 50px; }
-      .kop { text-align: center; }
-      .judul { font-size: 22px; font-weight: bold; }
-      .alamat { font-size: 12px; margin-top: 3px; }
-      .subjudul { font-size: 16px; font-weight: bold; }
-      .periode { font-size: 11px; margin-top: 3px; }
-      .garis { margin-top: 10px; border-top: 3px solid black; border-bottom: 1px solid black; height: 3px; }
-      table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-      table, th, td { border: 1px solid black; }
-      th { text-align: center; padding: 8px; }
-      td { padding: 6px; vertical-align: middle; }
-      .grand-total td { font-weight: bold; }
+      body {
+         font-family: Arial, sans-serif;
+         font-size: 12px;
+         margin: 30px 40px;
+      }
+
+      .header {
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 12px;
+      }
+
+      .header td {
+         vertical-align: middle;
+         border: none;
+         padding: 0;
+      }
+
+      .header-logo {
+         width: 120px;
+         text-align: left;
+      }
+
+      .header-title {
+         text-align: center;
+      }
+
+      .header-space {
+         width: 120px;
+      }
+
+      .judul {
+         font-size: 22px;
+         font-weight: bold;
+      }
+
+      .alamat {
+         font-size: 12px;
+         margin-top: 3px;
+      }
+
+      .subjudul {
+         font-size: 16px;
+         font-weight: bold;
+      }
+
+      .garis {
+         margin-top: 10px;
+         border-top: 3px solid black;
+         border-bottom: 1px solid black;
+         height: 3px;
+      }
+
+      .laga {
+         width: 90px;
+         height: auto;
+         display: block;
+      }
+
+      table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-top: 15px;
+      }
+
+      table,
+      th,
+      td {
+         border: 1px solid black;
+      }
+
+      th {
+         text-align: center;
+         padding: 8px;
+      }
+
+      td {
+         padding: 6px; vertical-align: middle;
+      }
+      
    </style>
 </head>
 
 <body>
 
-   <div class="header">
-      <img src="{{ public_path('images/logo-unri.png') }}" class="logo">
-      <div class="kop">
-         <div class="judul">SPICA RENTAL MOBIL</div>
-         <div class="alamat">Jl. Contoh No.123 Pekanbaru</div>
-      </div>
-   </div>
+   <table class="header" style="border: none;">
+      <tr>
+         <td class="header-logo">
+            <img src="{{ public_path('images/RENTAL-MOBIL.jpeg') }}" alt="logo" class="laga" />
+         </td>
+         <td class="header-title">
+            <div class="judul">
+               SPICA RENTAL MOBIL
+            </div>
+
+            <div class="alamat">
+               Jl. Contoh No.123 Pekanbaru
+            </div>
+         </td>
+         <td class="header-space"></td>
+      </tr>
+   </table>
+  
+
+  
 
    <div class="garis"></div>
    <div class="subjudul">LAPORAN TRANSAKSI PENYEWAAN</div>

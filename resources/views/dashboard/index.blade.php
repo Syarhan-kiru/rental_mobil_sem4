@@ -92,7 +92,6 @@
                                     <th>ID Mobil</th>
                                     <th>Plat Nomor</th>
                                     <th>Merek</th>
-                                    <th>Tipe</th>
                                     <th>Tahun</th>
                                     <th>Harga / Hari</th>
                                     <th>Status</th>
