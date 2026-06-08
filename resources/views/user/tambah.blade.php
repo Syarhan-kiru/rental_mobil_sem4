@@ -14,7 +14,7 @@
 
                     <div class="mb-3">
                         <label>Kode User</label>
-                        <input type="text" name="kode_user" class="form-control" value="{{ old('kode_user') }}" required>
+                        <input type="text" name="kode_user" class="form-control" value="{{ $kodeUser }}" readonly>
                     </div>
 
                     <div class="mb-3">

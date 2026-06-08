@@ -47,12 +47,16 @@ class MobilController extends Controller
     $request->validate([
         'plat_nomor' => 'required|unique:mobil,plat_nomor',
         'merek' => 'required',
-        'tipe' => 'required',
         'tahun' => 'required|integer|min:1900|max:' . date('Y'),
         'harga_sewa_sehari' => 'required|numeric',
         'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         'status' => 'required',
+    ],
+      [
+        'plat_nomor.unique' => 'Plat sudah digunakan',
+        'plat_nomor.required' => 'Plat nomor wajib diisi',
     ]);
+    
 
     $kodeMobil = $this->generateKodeMobil();
 
@@ -66,14 +70,14 @@ class MobilController extends Controller
         'id_mobil' => $kodeMobil,
         'plat_nomor' => $request->plat_nomor,
         'merek' => $request->merek,
-        'tipe' => $request->tipe,
         'tahun' => $request->tahun,
         'harga_sewa_sehari' => $request->harga_sewa_sehari,
         'foto' => $namaFoto,
         'status' => $request->status,
     ]);
 
-    return response()->json([
+     return response()->json([
+        'status' => true,
         'message' => 'Data mobil berhasil disimpan'
     ]);
 }
@@ -86,46 +90,12 @@ public function edit($id)
         'data' => $html
     ]);
 }
-
-
-        
-    
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(mobil $mobil)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request)
     {
         $request->validate([
             'id_mobil' => 'required|exists:mobil,id_mobil',
             'plat_nomor' => 'required|unique:mobil,plat_nomor,' . $request->id_mobil . ',id_mobil',
             'merek' => 'required',
-            'tipe' => 'required',
             'tahun' => 'required|integer|min:1900|max:' . date('Y'),
             'harga_sewa_sehari' => 'required|numeric',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -147,7 +117,6 @@ public function edit($id)
         $mobil->update([
             'plat_nomor' => $request->plat_nomor,
             'merek' => $request->merek,
-            'tipe' => $request->tipe,
             'tahun' => $request->tahun,
             'harga_sewa_sehari' => $request->harga_sewa_sehari,
             'foto' => $namaFoto,

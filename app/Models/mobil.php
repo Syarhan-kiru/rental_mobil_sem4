@@ -16,7 +16,6 @@ class mobil extends Model
         'id_mobil',
         'plat_nomor',
         'merek',
-        'tipe',
         'tahun',
         'harga_sewa_sehari',
         'foto',

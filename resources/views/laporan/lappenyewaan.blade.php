@@ -25,7 +25,7 @@
 <body>
 
    <div class="header">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL1YGysP4CyXgjsHGhNvolLfAS0lwokvh-_Q&s" class="logo">
+      <img src="{{ public_path('images/logo-unri.png') }}" class="logo">
       <div class="kop">
          <div class="judul">SPICA RENTAL MOBIL</div>
          <div class="alamat">Jl. Contoh No.123 Pekanbaru</div>

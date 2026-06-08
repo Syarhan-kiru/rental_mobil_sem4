@@ -34,9 +34,11 @@
 
                             <tr>
                                 <th width="80">No</th>
+                                <th>Kode User</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Level</th>
+                                <th width="120">Aksi</th>
                             </tr>
 
                         </thead>
@@ -50,6 +52,7 @@
                             ?>
                             <tr>
                                 <td><?= $nomor; ?></td>
+                                <td><?= $row['kode_user']; ?></td>
                                 <td><?= $row['nama_user']; ?></td>
                                 <td><?= $row['email_user']; ?></td>
                                 <td>
@@ -67,6 +70,16 @@
                                     Karyawan
                                     <?php
                                     } ?>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info btn-sm"
+                                        onclick="edituser('<?= $row['kode_user']; ?>')" title="Edit">
+                                        <i class="mdi mdi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                        onclick="hapususer('<?= $row['kode_user']; ?>')" title="Hapus">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -116,5 +129,43 @@
             },
         });
     }
-     
+
+    function edituser(kode) {
+        $.ajax({
+            url: "{{ url('user/edit') }}/" + kode,
+            type: "GET",
+            dataType: 'json',
+            success: function (response) {
+                if (response.data) {
+                    $(".viewmodal").html(response.data).show();
+                    $("#modalEditUser").on("shown.bs.modal", function () {
+                        $("#nama_user_edit").focus();
+                    });
+                    $("#modalEditUser").modal("show");
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            },
+        });
+    }
+
+    function hapususer(kode) {
+        if (!confirm('Yakin ingin menghapus data user ini?')) {
+            return;
+        }
+
+        $.ajax({
+            url: "{{ url('user/hapus') }}/" + kode,
+            type: "GET",
+            dataType: 'json',
+            success: function (response) {
+                alert(response.message);
+                location.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            },
+        });
+    }
 </script>

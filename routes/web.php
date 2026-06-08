@@ -6,12 +6,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PenyewaanController;
-<<<<<<< HEAD
 use App\Http\Controllers\LaporanController;
-=======
 use App\Http\Controllers\PengembalianController;
->>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1
-
+use App\Models\Mobil;
+use App\Models\Pelanggan;
+use App\Models\Penyewaan;
 /*
 |--------------------------------------------------------------------------
 | Autentikasi / Login (Bisa Diakses Tanpa Login)
@@ -33,7 +32,20 @@ Route::controller(LoginController::class)->group(function () {
 */
 Route::middleware('auth')->group(function () {
 
-    Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+    Route::get('/dashboard', function () {
+        $dashboardStats = [
+            'total_mobil' => Mobil::count(),
+            'total_pelanggan' => Pelanggan::count(),
+            'total_transaksi' => Penyewaan::count(),
+            'transaksi_berjalan' => Penyewaan::where('status', 'berjalan')->count(),
+        ];
+
+        $mobilTersedia = Mobil::whereIn('status', ['aktif', 'tersedia'])
+            ->orderBy('merek')
+            ->get();
+
+        return view('dashboard.index', compact('dashboardStats', 'mobilTersedia'));
+    })->name('dashboard');
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/tambah', [UserController::class, 'tambah'])->name('tambah');
         Route::post('/simpan', [UserController::class, 'simpan'])->name('simpan');
         Route::get('/hapus/{id}', [UserController::class, 'hapus'])->name('hapus');
-        Route::post('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::post('/update', [UserController::class, 'update'])->name('update');
     });
 
@@ -77,47 +89,21 @@ Route::middleware('auth')->group(function () {
         Route::post('/update', [PelangganController::class, 'update'])->name('update');
     });
 
-<<<<<<< HEAD
    Route::prefix('penyewaan')->name('penyewaan.')->group(function () {
     Route::get('/', [PenyewaanController::class, 'index'])->name('index');
     Route::get('/tambah', [PenyewaanController::class, 'tambah'])->name('tambah');
     Route::post('/simpan', [PenyewaanController::class, 'simpan'])->name('simpan');
-    Route::get('/detail/{id}', [PenyewaanController::class, 'show'])->name('detail');
-    Route::get('/hapus/{id}', [PenyewaanController::class, 'destroy'])->name('hapus');
+    Route::get('/hapus/{id}', [PenyewaanController::class, 'hapus'])->name('hapus');
     Route::get('/edit/{id}', [PenyewaanController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [PenyewaanController::class, 'update'])->name('update');
 });
 Route::prefix('laporan')->name('laporan.')->group(function () {
     Route::get('/mobil', [LaporanController::class, 'lapmobil'])->name('mobil');
+    Route::get('/pelanggan', [LaporanController::class, 'lappelanggan'])->name('pelanggan');
     Route::get('/penyewaan', [LaporanController::class, 'lappenyewaan'])->name('penyewaan');
 });
-    });
-/*
-=======
-    /*
->>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1
-    |--------------------------------------------------------------------------
-    | Modul 4: Data Penyewaan
-    |--------------------------------------------------------------------------
-    */
-<<<<<<< HEAD
+    
 
-=======
-    Route::prefix('penyewaan')->name('penyewaan.')->group(function () {
-        Route::get('/', [PenyewaanController::class, 'index'])->name('index');
-        Route::get('/tambah', [PenyewaanController::class, 'tambah'])->name('tambah');
-        Route::post('/simpan', [PenyewaanController::class, 'simpan'])->name('simpan');
-        Route::get('/detail/{id}', [PenyewaanController::class, 'show'])->name('detail');
-        Route::get('/hapus/{id}', [PenyewaanController::class, 'hapus'])->name('hapus');
-        Route::get('/edit/{id}', [PenyewaanController::class, 'edit'])->name('edit');
-        Route::post('/update/{id}', [PenyewaanController::class, 'update'])->name('update');
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Modul 5: Data Pengembalian (Bagian Akin)
-    |--------------------------------------------------------------------------
-    */
     Route::prefix('pengembalian')->name('pengembalian.')->group(function () {
         Route::get('/', [PengembalianController::class, 'index'])->name('index');
         Route::get('/tambah', [PengembalianController::class, 'tambah'])->name('tambah');
@@ -126,6 +112,4 @@ Route::prefix('laporan')->name('laporan.')->group(function () {
         Route::post('/update/{id}', [PengembalianController::class, 'update'])->name('update');
         Route::get('/hapus/{id}', [PengembalianController::class, 'hapus'])->name('hapus');
     });
-
 });
->>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1

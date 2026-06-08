@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Spica Admin</title>
+  <title>Rental Mobil</title>
 
   <link rel="stylesheet" href="{{ asset('vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
@@ -22,7 +22,17 @@
       <div class="main-panel">
         <div class="content-wrapper">
        @yield('content')
-      </div>
+        </div>
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between py-2 px-4">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+              Copyright &copy; {{ date('Y') }} Rental Mobil
+            </span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+              Dashboard admin untuk monitoring operasional rental
+            </span>
+          </div>
+        </footer>
       </div>
     </div>
    

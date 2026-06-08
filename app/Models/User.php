@@ -41,6 +41,11 @@ class User extends Authenticatable
         
     ];
 
+    public function getAuthPassword()
+    {
+        return $this->pass_user;
+    }
+
     /**
      * Get the attributes that should be cast.
      *

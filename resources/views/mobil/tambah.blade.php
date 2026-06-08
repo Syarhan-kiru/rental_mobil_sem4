@@ -29,11 +29,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label>Tipe</label>
-                        <input type="text" name="tipe" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
                         <label>Tahun</label>
                         <input type="number" name="tahun" class="form-control" required>
                     </div>
@@ -92,7 +87,6 @@ $('#formTambahMobil').submit(function(e) {
         contentType: false,
 
         success: function(response) {
-
             alert(response.message);
 
             $('#modalTambahMobil').modal('hide');
@@ -101,10 +95,19 @@ $('#formTambahMobil').submit(function(e) {
         },
 
         error: function(xhr) {
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                let pesan = '';
 
-            console.log(xhr.responseText);
+                $.each(errors, function(key, value) {
+                    pesan += value[0] + '\n';
+                });
 
-            alert('Gagal menyimpan data');
+                alert(pesan);
+            } else {
+                console.log(xhr.responseText);
+                alert('Gagal menyimpan data');
+            }
         }
     });
 });

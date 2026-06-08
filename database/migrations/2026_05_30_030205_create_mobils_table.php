@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('id_mobil')->primary();
             $table->string('plat_nomor')->unique();
             $table->string('merek');
-            $table->string('tipe');
             $table->integer('tahun');
             $table->integer('harga_sewa_sehari');
             $table->string('foto')->nullable();

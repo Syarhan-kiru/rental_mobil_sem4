@@ -78,8 +78,7 @@
 
    <div class="header">
 
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL1YGysP4CyXgjsHGhNvolLfAS0lwokvh-_Q&s"
-         class="logo">
+      <img src="{{ public_path('images/logo-unri.png') }}" class="logo">
 
       <div class="kop">
          <div class="judul">
@@ -103,7 +102,6 @@
             <th width="5%">No</th>
             <th width="12%">Plat Nomor</th>
             <th width="12%">Merek</th>
-            <th width="12%">Tipe</th>
             <th width="8%">Tahun</th>
             <th width="15%">Harga Sewa/Hari</th>
             <th width="15%">Foto</th>
@@ -113,26 +111,26 @@
 
       <tbody>
          @foreach($mobil as $item)
-         <tr>
-            <td align="center">{{ $loop->iteration }}</td>
-            <td>{{ $item->plat_nomor }}</td>
-             <td>{{ $item->merek }}</td>
-            <td align="center">{{ $item->tipe }}</td>
-            <td align="center">{{ $item->tahun }}</td>
-            <td align="right">Rp {{ number_format($item->harga_sewa_sehari, 0, ',', '.') }}</td>
-            <td align="center">
-                @if($item->foto)
-                    <img src="{{ storage_path('app/public/' . $item->foto) }}" class="foto-mobil">
-                @else
-                  -
-               @endif
-            </td>
-            <td align="center">{{ $item->status }}</td>
+            <tr>
+               <td align="center">{{ $loop->iteration }}</td>
+               <td>{{ $item->plat_nomor }}</td>
+               <td>{{ $item->merek }}</td>
+               <td align="center">{{ $item->tahun }}</td>
+               <td align="right">Rp {{ number_format($item->harga_sewa_sehari, 0, ',', '.') }}</td>
+               <td align="center">
+                  @if($item->foto)
+                     <img src="{{ storage_path('app/public/' . $item->foto) }}" class="foto-mobil">
+                  @else
+                     -
+                  @endif
+               </td>
+               <td align="center">{{ $item->status }}</td>
 
-         </tr>
+            </tr>
          @endforeach
       </tbody>
    </table>
 
 </body>
+
 </html>

@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penyewaan', function (Blueprint $table) {
-            $table->string('id_penyewaan'); // Primary Key
+            $table->string('id_penyewaan')->primary(); // Primary Key
             $table->string('kode_user');     // FK ke users
             $table->string('id_pelanggan');  // FK ke pelanggan
             $table->string('id_mobil');      // FK ke mobil

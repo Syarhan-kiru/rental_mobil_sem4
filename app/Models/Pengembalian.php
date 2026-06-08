@@ -9,9 +9,10 @@ class Pengembalian extends Model
 {
     use HasFactory;
 
-    protected $table = 'pengembalians';
+    protected $table = 'pengembalian';
     protected $primaryKey = 'id_pengembalian';
     public $incrementing = false;
+    public $timestamps = false;
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -20,7 +21,7 @@ class Pengembalian extends Model
         'tanggal_dikembalikan',
         'kondisi_mobil',
         'denda',
-        'total_payar'
+        'total_bayar'
     ];
 
     // Relasi balik ke Penyewaan agar bisa tahu data Mobil & Pelanggan di View Index

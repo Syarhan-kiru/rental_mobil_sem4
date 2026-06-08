@@ -44,7 +44,7 @@
                                     </span>
                                 </td>
                                 <td>{{ number_format($row->denda, 0, ',', '.') }}</td>
-                                <td>{{ number_format($row->total_payar, 0, ',', '.') }}</td>
+                                <td>Rp {{ number_format($row->total_bayar, 0, ',', '.') }}</td>
                                 <td>
                                     <button type="button" class="btn btn-outline-info btn-sm"
                                         onclick="editPengembalian('{{ $row->id_pengembalian }}')" title="Edit">

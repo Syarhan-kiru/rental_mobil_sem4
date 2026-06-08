@@ -11,19 +11,17 @@ return new class extends Migration
      */
    public function up(): void
 {
-    Schema::create('pengembalians', function (Blueprint $table) {
-        // Primary Key sesuai gaya penamaan projectmu
+    Schema::create('pengembalian', function (Blueprint $table) {
         $table->string('id_pengembalian')->primary(); 
         
-        // Foreign Key menyambung ke tabel penyewaans
+        
         $table->string('id_penyewaan');
-        $table->foreign('id_penyewaan')->references('id_penyewaan')->on('penyewaans')->onDelete('cascade');
+        $table->foreign('id_penyewaan')->references('id_penyewaan')->on('penyewaan')->onDelete('cascade');
         
         $table->date('tanggal_dikembalikan');
         $table->string('kondisi_mobil');
         $table->bigInteger('denda')->default(0);
-        $table->bigInteger('total_payar')->default(0); // Menyesuaikan input name 'total_payar' / total_bayar
-        $table->timestamps();
+        $table->bigInteger('total_bayar')->default(0);
     });
 }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengembalians');
+        Schema::dropIfExists('pengembalian');
     }
 };

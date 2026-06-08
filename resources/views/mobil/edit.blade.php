@@ -29,11 +29,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label>Tipe</label>
-                        <input type="text" name="tipe" class="form-control" value="{{ $mobil->tipe }}" required>
-                    </div>
-
-                    <div class="mb-3">
                         <label>Tahun</label>
                         <input type="number" name="tahun" class="form-control" value="{{ $mobil->tahun }}" required>
                     </div>

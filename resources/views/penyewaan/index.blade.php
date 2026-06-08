@@ -34,12 +34,12 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $row->id_penyewaan }}</td>
-                                <td>{{ $row->user->name ?? '-' }}</td>
+                                <td>{{ $row->user->nama_user ?? '-' }}</td>
                                 <td>{{ $row->pelanggan->nama_pelanggan ?? '-' }}</td>
                                 <td>{{ $row->mobil->merek ?? '-' }}</td>
                                 <td>{{ $row->tanggal_sewa }}</td>
                                 <td>{{ $row->tanggal_kembali ?? '-' }}</td>
-                                <td>{{ number_format($row->total_harga, 0, ',', '.') }}</td>
+                                <td>Rp {{ number_format($row->total_harga, 0, ',', '.') }}</td>
                                 <td>
                                     <span class="badge {{ $row->status == 'berjalan' ? 'bg-warning' : 'bg-success' }}">
                                         {{ ucfirst($row->status) }}

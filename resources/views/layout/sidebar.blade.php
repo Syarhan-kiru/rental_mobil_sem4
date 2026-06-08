@@ -31,6 +31,11 @@
         <span class="menu-title">Data Pelanggan</span>
       </a>
     </li>
+    <li class="nav-item sidebar-category">
+      <p>Data Transaksi</p>
+      <span></span>
+    </li>
+
 
     <li class="nav-item {{ Request::is('penyewaan*') ? 'active' : '' }}">
       <a class="nav-link" href="{{ url('penyewaan') }}">
@@ -39,7 +44,13 @@
       </a>
     </li>
 
-<<<<<<< HEAD
+    <li class="nav-item {{ Request::is('pengembalian*') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ url('pengembalian') }}">
+        <i class="mdi mdi-file-document-box menu-icon"></i>
+        <span class="menu-title">Data Pengembalian</span>
+      </a>
+    </li>
+
     <li class="nav-item sidebar-category">
   <p>Laporan</p>
   <span></span>
@@ -53,26 +64,25 @@
 </li>
 
 <li class="nav-item">
+  <a class="nav-link" href="{{ route('laporan.pelanggan') }}">
+    <i class="mdi mdi-file-pdf-box menu-icon"></i>
+    <span class="menu-title">Laporan Pelanggan</span>
+  </a>
+</li>
+
+<li class="nav-item">
   <a class="nav-link" href="{{ route('laporan.penyewaan') }}">
     <i class="mdi mdi-file-pdf-box menu-icon"></i>
     <span class="menu-title">Laporan Penyewaan</span>
   </a>
 </li>
-=======
-    <li class="nav-item {{ Request::is('pengembalian*') ? 'active' : '' }}">
-      <a class="nav-link" href="{{ url('pengembalian') }}">
-        <i class="mdi mdi-backup-restore menu-icon"></i>
-        <span class="menu-title">Data Pengembalian</span>
-      </a>
-    </li>
->>>>>>> 9a06308347d6095fad4367035039f4c7052f0ea1
 
     @if (session('level_user') == 1)
       <li class="nav-item sidebar-category">
         <p>User</p>
         <span></span>
       </li>
-
+  
       <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('user') }}">
           <i class="mdi mdi-account menu-icon"></i>
