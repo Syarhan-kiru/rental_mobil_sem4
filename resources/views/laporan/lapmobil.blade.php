@@ -94,7 +94,7 @@
    <table class="header" style="border: none;">
       <tr>
          <td class="header-logo">
-            <img src="{{ public_path('images/RENTAL-MOBIL.jpeg') }}" alt="logo" class="laga" />
+            <img src="{{ public_path('images/foto.jpg') }}" alt="logo" class="laga" />
          </td>
          <td class="header-title">
             <div class="judul">

@@ -23,6 +23,7 @@
                             @foreach ($penyewaan as $sewa)
                                 <option value="{{ $sewa->id_penyewaan }}"
                                     data-totalharga="{{ $sewa->total_harga }}"
+                                    data-tglkembali="{{ $sewa->tanggal_kembali }}"
                                     {{ $pengembalian->id_penyewaan == $sewa->id_penyewaan ? 'selected' : '' }}>
                                     {{ $sewa->id_penyewaan }} - {{ $sewa->pelanggan->nama_pelanggan }} ({{ $sewa->mobil->merek }})
                                 </option>
@@ -37,16 +38,16 @@
 
                     <div class="mb-3">
                         <label>Kondisi Mobil</label>
-                        <select name="kondisi_mobil" class="form-control" required>
+                        <select name="kondisi_mobil" id="kondisi_mobil_edit" class="form-control" required>
                             <option value="Baik" {{ $pengembalian->kondisi_mobil == 'Baik' ? 'selected' : '' }}>Baik</option>
-                            <option value="Lecet" {{ $pengembalian->kondisi_mobil == 'Lecet' ? 'selected' : '' }}>Lecet</option>
-                            <option value="Rusak" {{ $pengembalian->kondisi_mobil == 'Rusak' ? 'selected' : '' }}>Rusak</option>
+                            <option value="Rusak Ringan" {{ $pengembalian->kondisi_mobil == 'Rusak Ringan' ? 'selected' : '' }}>Lecet</option>
+                            <option value="Rusak Berat" {{ $pengembalian->kondisi_mobil == 'Rusak Berat' ? 'selected' : '' }}>Rusak</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label>Denda Terlambat/Kerusakan (Rp)</label>
-                        <input type="number" name="denda" id="denda_edit" class="form-control" value="{{ $pengembalian->denda }}" required>
+                        <input type="number" name="denda" id="denda_edit" class="form-control" value="{{ $pengembalian->denda }}" readonly required>
                     </div>
 
                     <div class="mb-3">
@@ -70,15 +71,35 @@
 <script>
     function hitungTotalPengembalianEdit() {
         const sewaTerpilih = $('#id_penyewaan_edit option:selected');
+        if (!sewaTerpilih.val()) return;
+
         const totalHargaSewa = parseInt(sewaTerpilih.data('totalharga'), 10) || 0;
-        const denda = parseInt($('#denda_edit').val(), 10) || 0;
+        const tglHarusKembali = new Date(sewaTerpilih.data('tglkembali'));
+        const tglKembaliAktual = new Date($('#tanggal_dikembalikan_edit').val());
+
+        let dendaKeterlambatan = 0;
+        if ($('#tanggal_dikembalikan_edit').val() && tglKembaliAktual > tglHarusKembali) {
+            const selisihWaktu = tglKembaliAktual - tglHarusKembali;
+            const selisihHari = Math.ceil(selisihWaktu / (1000 * 60 * 60 * 24));
+            dendaKeterlambatan = selisihHari * 50000;
+        }
+
+        let dendaKerusakan = 0;
+        const kondisi = $('#kondisi_mobil_edit').val();
+        if (kondisi === 'Rusak Ringan') dendaKerusakan = 200000;
+        if (kondisi === 'Rusak Berat') dendaKerusakan = 1000000;
+
+        const denda = dendaKeterlambatan + dendaKerusakan;
+        $('#denda_edit').val(denda);
 
         $('#total_bayar_edit').val(totalHargaSewa + denda);
     }
 
-    $('#id_penyewaan_edit, #denda_edit').on('change input', function () {
+    $('#id_penyewaan_edit, #tanggal_dikembalikan_edit, #kondisi_mobil_edit').on('change input', function () {
         hitungTotalPengembalianEdit();
     });
+
+    hitungTotalPengembalianEdit();
 
     $('#formEditPengembalian').submit(function (e) {
         e.preventDefault();
